@@ -1,17 +1,18 @@
-{stable-difussion, convertToSafetensor, civitaiDownload}:
-
-stable-difussion{
-    name = "Genevieve";
-    version = "1.0";
+{civitaiDownload}:
+rec {
     sd-version = "1.5";
+    version = "1.0";
+
+    modelId = 100;
+    versionId = 112;
+    fileId = 459;
     format = "safetensor";
-    src = convertToSafetensor civitaiDownload {
-                modelId = 100;
-                versionId = 112;
-                fileId = 459;
+    
+    name = "Genevieve-sd${sd-version}-${version}-${toString modelId}-${toString versionId}-${toString fileId}.${format}";
+    model = civitaiDownload {
+                inherit modelId versionId fileId;
                 hash = "sha256-/Ew3ap56afRK6creo5DCqZv2a9bD+ah1E8OSUgbjZUA=";
     };
-    
     meta = {
         description = ''This model was trained on a custom created character "Genevieve" and was not based on any existing person. As such anyone is free to use this model and her likeness in their own works, be that commercial or non-commercial.'';
         author = "Xanthius";
@@ -22,5 +23,5 @@ stable-difussion{
             autov1 = "CE48B9E8";
             autov2 = "FC4C376A9E";
         };
-    }
+    };
 }

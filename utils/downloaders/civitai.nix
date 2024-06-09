@@ -34,7 +34,7 @@ derivation {
         ${aria2c} -x ${toString maxConnections} -j ${toString maxConcurrentDownloads} -s ${toString splitFiles} -q -d / -o $out $url
         ''];
     
-    system = builtins.currentSystem;
+    system = pkgs.system;
     outputHashMode = "flat";
     outputHashAlgo = "sha256";
     outputHash = hash;
