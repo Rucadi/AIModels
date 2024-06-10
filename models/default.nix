@@ -12,6 +12,7 @@ let
     sd_1_5 = callPackages ./sd_1_5.nix utils;
     vae = callPackages ./vae.nix utils;
     lora = callPackages ./lora.nix utils;
+    embeddings = callPackages ./embeddings.nix utils;
   };
 in
 self

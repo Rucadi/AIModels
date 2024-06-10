@@ -5,14 +5,13 @@ let
   self = with self; {
     callPackages = lib.callPackageWith (self//args);
 
-    use = lora: val: "<lora:${lora.filename}:${(builtins.substring 0 3 (toString val))}>";
-    words = lora: builtins.foldl' (p: c: "${p} ${c}") "" lora.trainedWords;
+    use = embedding: "${builtins.head embedding.trainedWords}";
   };
 in
 self // builtins.foldl' (prev: cur: prev//cur) {} (builtins.attrValues ( builtins.mapAttrs (
   name: value: (builtins.foldl' (prev: cur: 
     prev // {
-      ${cur} = self.callPackages ./lora-by-name/${name}/${cur}/default.nix {};
+      ${cur} = self.callPackages ./embeddings/${name}/${cur}/default.nix {};
     }
     ) {} value)
-) (_folders ./lora-by-name)))
+) (_folders ./embeddings)))
