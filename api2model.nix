@@ -1,5 +1,5 @@
 let 
-  api = builtins.fromJSON (builtins.readFile (builtins.fetchurl "https://civitai.com/api/v1/models/296576"));
+  api = builtins.fromJSON (builtins.readFile (builtins.fetchurl "https://civitai.com/api/v1/models/218376"));
   pkgs = import <nixpkgs> {};
 in
 {
@@ -7,7 +7,7 @@ in
   type = api.type;
   model = builtins.foldl' (cur: new: cur//{
   "${new.name}" = let 
-      file = (builtins.head new.files);
+      file = (builtins.head (builtins.filter (f: f ? primary) new.files));
   in {
       inherit (new) id nsfwLevel;
       filename = builtins.head (builtins.split "\\." file.name);
@@ -16,5 +16,6 @@ in
   }) {} api.modelVersions;
 
   meta = {
+      author = api.creator.username;
   };
 }
