@@ -1,16 +1,16 @@
 {civitaiDownload}:
-rec {
-    sd-version = "1.5";
-    version = "1.0";
-
-    fileId = 112;
-    format = "safetensor";
-    
-    name = "Genevieve-sd${sd-version}-${version}-${toString fileId}.${format}";
-    model = civitaiDownload {
-                inherit fileId;
+{
+    model.default = {
+            model = civitaiDownload {
+                fileId = 112;
                 hash = "sha256-/Ew3ap56afRK6creo5DCqZv2a9bD+ah1E8OSUgbjZUA=";
+            };
+            extension = "ckpt";
+            filename = "Genevieve";
+            id = 112;
+            nsfwLevel = 0;
     };
+
     meta = {
         description = ''This model was trained on a custom created character "Genevieve" and was not based on any existing person. As such anyone is free to use this model and her likeness in their own works, be that commercial or non-commercial.'';
         author = "Xanthius";

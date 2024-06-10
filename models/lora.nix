@@ -4,6 +4,8 @@ let
   _folders = path:  builtins.mapAttrs (name: type: builtins.attrNames (builtins.readDir "${path}/${name}")) (builtins.readDir path);
   self = with self; {
     callPackages = lib.callPackageWith (self//args);
+
+    use = lora: val: "<lora:${lora.filename}:${toString val}>";
   };
 in
 self // builtins.foldl' (prev: cur: prev//cur) {} (builtins.attrValues ( builtins.mapAttrs (
