@@ -1,9 +1,10 @@
 {nixpkgs}:
+{civitai_api_key?""}:
 let
   lib = import ./lib;
   self = with self; {
     utils = {
-      civitaiDownload = nixpkgs.callPackage  ../utils/downloaders/civitai.nix {};
+      civitaiDownload = nixpkgs.callPackage  ../utils/downloaders/civitai_simple.nix {inherit civitai_api_key;};
       convertToSafetensor = nixpkgs.callPackage  ../utils/convert-to-safetensor.nix {};
     };
     callPackages = lib.callPackageWith self;

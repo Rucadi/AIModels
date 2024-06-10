@@ -1,17 +1,33 @@
-{civitaiDownload}:
-rec {
+{
+  civitaiApiModel,
+  model ? import <nixpkgs> {},
+}:
+let 
+    pkgs = import <nixpkgs> {};
+    civit = builtins.fromJSON civitaiApiModel;
+in
+{
+    type = civit.type;
     sd-version = "1.5";
     version = "1.0";
 
-    fileId = 112;
+    modelId = civit.id;
+    versionId = (builtins.head civit.modelVersions).id;
+    trainedWords = [ pkgs.lib splitString "," civit.trainedWords ];
+    fileId = 459;
     format = "safetensor";
     
-    name = "Genevieve-sd${sd-version}-${version}-${toString fileId}.${format}";
-    model = civitaiDownload {
-                inherit fileId;
-                hash = "sha256-/Ew3ap56afRK6creo5DCqZv2a9bD+ah1E8OSUgbjZUA=";
+    name = "Genevieve-sd${sd-version}-${version}-${toString modelId}-${toString versionId}-${toString fileId}.${format}";
+    model = {
+        name1 = {
+            trainedWords = trainedWords;
+            model = p...;
+        }
     };
     meta = {
+        nsfw = civit.nsfw;
+        nsfwLevel = civit.nsfwLevel;
+
         description = ''This model was trained on a custom created character "Genevieve" and was not based on any existing person. As such anyone is free to use this model and her likeness in their own works, be that commercial or non-commercial.'';
         author = "Xanthius";
         identifiers = {
